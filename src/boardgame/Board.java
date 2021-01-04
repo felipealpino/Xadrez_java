@@ -39,6 +39,13 @@ public class Board {
 	}
 	
 	
+	public void placePiece (Piece piece, Position position) {
+		//vai na matriz e pieces[][] e atribui a peça
+		//a matriz está declarada no inicio e instanciada no construtor
+		pieces[position.getRow()][position.getColumn()] = piece;
+		piece.position = position; // a posicao da peça é acessivel diretamente pois está como protectec
+		
+	}
 	
 	
 	
