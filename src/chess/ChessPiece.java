@@ -19,7 +19,7 @@ public abstract class ChessPiece extends Piece {
 	}
 	
 	public int getMoveCount() {
-		return this.moveCount
+		return this.moveCount;
 	}
 	
 	public void increaseMoveCount() {
