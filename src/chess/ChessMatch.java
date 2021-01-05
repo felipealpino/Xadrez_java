@@ -9,11 +9,26 @@ import chess.pieces.Rook;
 public class ChessMatch {
 
 	private Board board;
+	private int turn;
+	private Color currentPlayer;
 
 	public ChessMatch(Board board) {
 		this.board = new Board(8, 8);
+		this.turn = 1;
+		this.currentPlayer = Color.WHITE;
 		initialSetup();
 	}
+	
+	public int getTurn() {
+		return this.turn;
+	}
+	
+	public Color getCurrentPlayer() {
+		return this.currentPlayer;
+	}
+	
+	
+	
 	
 	public ChessPiece [][] getPieces() { //retorna uma matriz de peças de xadrex correspondentes a essa partida
 		ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getColumns()];
@@ -45,6 +60,7 @@ public class ChessMatch {
 		
 		Piece capturedPiece = makeMove(source, target);
 		
+		nextTurn();
 		return (ChessPiece) capturedPiece;
 	}
 	
@@ -61,9 +77,14 @@ public class ChessMatch {
 		if (!board.thereIsAPiece(position)) {
 			throw new ChessException("Nao existe peça na posicao de origem");
 		}
+		if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()) {
+			//caso o jogador tente mover uma peça adversária
+			throw new ChessException("A peca escolhida nao pertence a voce");
+		}
 		if(!board.piece(position).isThereAnyPossibleMove()) {
 			throw new ChessException("Nao existem movimentos possiveis para a peca escolhida");
 		}
+		
 	}
 	
 	
@@ -73,6 +94,13 @@ public class ChessMatch {
 			throw new ChessException("A peca escolhida nao pode se mover para a posicao de destino");
 		}
 	}
+	
+	
+	private void nextTurn() {
+		turn++;
+		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
+	}
+	
 	
 	
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
