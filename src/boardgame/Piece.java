@@ -1,6 +1,6 @@
 package boardgame;
 
-public class Piece {
+public abstract class Piece {
 	
 	protected Position position;
 	
@@ -15,6 +15,30 @@ public class Piece {
 		return board;
 	}
 	//setBoard apagado pois nao é permitido que o tabuleiro seja alterado
+	
+	public abstract boolean[][] possibleMovies();
+	
+	public boolean possibleMovie(Position position) {
+		return possibleMovies()[position.getRow()][position.getColumn()];
+	}
+	
+	public boolean isThereAnyPossibleMove() {
+		/* Chama o metodo abstrato possibleMovies que irá retornar uma matriz de booleano
+		 * iremos varrer a matriz para verificar se existe pelo menos uma posição que seja true
+		 */
+		boolean[][] mat = possibleMovies();
+		for (int i = 0; i<mat.length; i++) {
+			for(int j=0; j<mat.length; j++) {
+				if(mat[i][j]) {
+					return true;
+				} 
+			}
+		}
+		return false;
+	}
+
+	
+	
 	
 	
 }
